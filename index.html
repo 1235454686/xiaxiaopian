@@ -284,28 +284,25 @@ img { display: block; max-width: 100%; }
 
 /* Price panel */
 .price-panel {
-  display: grid; gap: 16px; align-items: center;
-  padding: 22px; border-radius: 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: nowrap;
+  padding: 20px 24px; border-radius: 20px;
   background: linear-gradient(135deg, rgba(255,107,77,0.1), rgba(255,179,71,0.08));
   border: 1px solid rgba(255,107,77,0.2);
   box-shadow: inset 0 0 24px rgba(255,107,77,0.06);
   margin-top: auto;
 }
-.price-row {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  gap: 16px;
-}
-.price-row small {
+.price-left { white-space: nowrap; }
+.price-left small {
   display: block; color: var(--text-secondary);
   font-size: 12px; letter-spacing: 0.1em;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
-.price-row strong {
-  font-size: clamp(32px, 4vw, 48px); line-height: 1;
+.price-left strong {
+  font-size: clamp(28px, 3.5vw, 40px); line-height: 1;
   color: #fff; text-shadow: 0 0 24px rgba(255,107,77,0.2);
 }
-.price-row strong span { font-size: 18px; color: var(--coral-light); }
-.btn-group { display: flex; gap: 12px; }
+.btn-group { display: flex; gap: 10px; flex-wrap: nowrap; white-space: nowrap; }
 
 /* Stats row */
 .hero-stats {
@@ -577,15 +574,13 @@ img { display: block; max-width: 100%; }
           <div class="meta-chip">📤 搜索引擎自动推送</div>
         </div>
         <div class="price-panel">
-          <div class="price-row">
-            <div>
-              <small>永久授权</small>
-              <strong>¥2980</strong>
-            </div>
-            <div class="btn-group">
-              <a href="#buy" class="btn btn-primary">立即购买</a>
-              <a href="backend.html" class="btn btn-outline">查看演示</a>
-            </div>
+          <div class="price-left">
+            <small>永久授权</small>
+            <strong>¥2980</strong>
+          </div>
+          <div class="btn-group">
+            <a href="#buy" class="btn btn-primary">立即购买</a>
+            <a href="backend.html" class="btn btn-outline">查看演示</a>
           </div>
         </div>
       </div>
@@ -758,7 +753,7 @@ img { display: block; max-width: 100%; }
       <p>一套系统，全国分站。一个价格，终身使用。</p>
       <div class="price">¥2980 <small>/ 永久授权</small></div>
       <p style="font-size:13px;color:var(--text-muted);margin-top:-10px;margin-bottom:20px">一套一码 · IP绑定 · 免费升级 · 售后技术支持</p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:nowrap">
         <a href="#" class="btn btn-primary" style="font-size:16px;padding:14px 36px">立即下单购买</a>
         <a href="backend.html" class="btn btn-outline">先看演示后台</a>
       </div>
