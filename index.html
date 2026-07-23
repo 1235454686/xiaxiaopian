@@ -70,7 +70,8 @@ body::after {
 }
 
 /* Data flow lines */
-.page-shell { position: relative; overflow: hidden; }
+.page-shell { position: relative; }
+.page-shell-inner { position: relative; overflow: hidden; }
 .page-shell::before, .page-shell::after {
   content: ""; position: absolute; width: 1px; height: 100%;
   background: linear-gradient(180deg, transparent, rgba(255,107,77,0.6), transparent);
