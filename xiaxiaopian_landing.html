@@ -19,13 +19,12 @@
   --coral-light: #ff8c6e;
   --orange: #ff8c52;
   --gold: #ffb347;
-  --rose: #ff4d7a;
   --text: #f5ede6;
   --text-secondary: #baa390;
   --text-muted: #7a6a5c;
   --radius: 16px;
   --radius-lg: 24px;
-  --max-w: 1280px;
+  --max-w: 1200px;
   --font: "Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
   --shadow: 0 24px 80px rgba(0,0,0,0.4);
 }
@@ -130,11 +129,6 @@ img { display: block; max-width: 100%; }
   background: rgba(255,107,77,0.1);
   box-shadow: 0 0 24px rgba(255,107,77,0.1);
 }
-.btn-ghost {
-  background: transparent; color: var(--text-secondary);
-  padding: 8px 18px; border: 1px solid transparent;
-}
-.btn-ghost:hover { color: var(--coral); border-color: rgba(255,107,77,0.15); }
 
 /* ===== TOPBAR ===== */
 .topbar {
@@ -179,7 +173,7 @@ img { display: block; max-width: 100%; }
 }
 
 /* ===== HERO ===== */
-.hero { padding: 20px 0 32px; }
+.hero { padding: 20px 0 24px; }
 .hero-layout {
   display: grid;
   grid-template-columns: 1.3fr 0.8fr;
@@ -188,9 +182,6 @@ img { display: block; max-width: 100%; }
 }
 
 /* Hero carousel (left) */
-.hero-carousel {
-  display: flex; flex-direction: column; gap: 0;
-}
 .hero-carousel-viewport {
   position: relative; width: 100%;
   aspect-ratio: 16 / 10;
@@ -210,7 +201,6 @@ img { display: block; max-width: 100%; }
   object-fit: cover;
   position: relative; z-index: 1;
 }
-/* AI scan effect */
 .hero-slide::after {
   content: ""; position: absolute;
   top: 0; left: -100%;
@@ -225,7 +215,6 @@ img { display: block; max-width: 100%; }
   25% { left: 200%; }
   100% { left: 200%; }
 }
-/* Placeholder for hero image */
 .hero-placeholder {
   width: 100%; height: 100%;
   background: linear-gradient(135deg, rgba(255,107,77,0.06), rgba(255,179,71,0.04));
@@ -312,7 +301,7 @@ img { display: block; max-width: 100%; }
 .price-row strong span { font-size: 18px; color: var(--coral-light); }
 .btn-group { display: flex; gap: 12px; }
 
-/* Stats row below hero */
+/* Stats row */
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -342,136 +331,120 @@ img { display: block; max-width: 100%; }
   margin-top: 4px; position: relative;
 }
 
-/* ===== MARQUEE ===== */
-.marquee-section {
-  padding: 0 0 50px;
+/* ===== AI PLATFORM MARQUEE ===== */
+.ai-marquee-section {
+  padding: 0 0 24px;
 }
-.marquee-wrap {
-  margin-top: 0;
-}
-.marquee-wrap .container {
-  padding: 18px 0; overflow: hidden;
+.ai-marquee-wrap .container {
+  padding: 20px 0; overflow: hidden;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   background: linear-gradient(90deg, rgba(255,107,77,0.03), rgba(255,255,255,0.01), rgba(255,179,71,0.03));
   border-radius: 50px;
   position: relative;
 }
-.marquee-wrap .container::before,
-.marquee-wrap .container::after {
+.ai-marquee-wrap .container::before,
+.ai-marquee-wrap .container::after {
   content: ""; position: absolute; top: 0;
   width: 80px; height: 100%; z-index: 2; pointer-events: none;
   border-radius: 50px;
 }
-.marquee-wrap .container::before {
+.ai-marquee-wrap .container::before {
   left: 0;
   background: linear-gradient(90deg, var(--bg-deep) 0%, transparent 100%);
 }
-.marquee-wrap .container::after {
+.ai-marquee-wrap .container::after {
   right: 0;
   background: linear-gradient(270deg, var(--bg-deep) 0%, transparent 100%);
 }
-.marquee-label {
-  text-align: center; margin-bottom: 14px;
+.ai-marquee-label {
+  text-align: center; margin-bottom: 18px;
   position: relative; z-index: 3;
 }
-.marquee-label span {
-  display: inline-block; padding: 6px 16px; font-size: 13px;
+.ai-marquee-label span {
+  display: inline-block; padding: 8px 20px; font-size: 14px;
   color: var(--coral-light); font-weight: 600;
   background: rgba(255,107,77,0.06);
   border: 1px solid rgba(255,107,77,0.15);
   border-radius: 999px;
-  box-shadow: 0 2px 10px rgba(255,107,77,0.06);
+  box-shadow: 0 2px 12px rgba(255,107,77,0.06);
 }
-.marquee-track {
+.ai-logo-track {
   display: flex; width: max-content;
-  animation: marquee 24s linear infinite;
+  animation: logoMarquee 20s linear infinite;
 }
-.marquee-track:hover { animation-play-state: paused; }
-@keyframes marquee {
+.ai-logo-track:hover { animation-play-state: paused; }
+@keyframes logoMarquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
-.marquee-item {
-  padding: 10px 22px; margin: 0 8px;
-  border-radius: 999px; font-size: 14px;
-  color: var(--text-secondary);
-  border: 1px solid var(--line);
-  white-space: nowrap;
-  flex-shrink: 0;
+.ai-logo-item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; margin: 0 20px; flex-shrink: 0;
+  width: 100px;
+}
+.ai-logo-img {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
   transition: all 0.3s ease;
 }
-.marquee-item:hover {
+.ai-logo-item:hover .ai-logo-img {
   border-color: var(--coral);
-  color: var(--coral);
-  background: rgba(255,107,77,0.06);
-  box-shadow: 0 0 16px rgba(255,107,77,0.08);
+  box-shadow: 0 0 20px rgba(255,107,77,0.15);
+  transform: scale(1.1);
+}
+.ai-logo-name {
+  font-size: 12px; color: var(--text-muted);
+  text-align: center;
 }
 
 /* ===== SECTION HEAD ===== */
 .section { padding: 80px 0; }
 .section-head { text-align: center; margin-bottom: 44px; }
-.section-head .eyebrow {
-  display: inline-block; padding: 6px 16px; margin-bottom: 16px;
-  font-size: 13px; color: var(--coral-light);
-  background: rgba(255,107,77,0.06);
-  border: 1px solid rgba(255,107,77,0.15);
-  border-radius: 999px;
-}
 .section-head h2 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; }
 .section-head p { color: var(--text-secondary); font-size: 16px; margin-top: 10px; max-width: 560px; margin-left: auto; margin-right: auto; }
 .accent { color: var(--coral); }
 
 /* ===== FEATURE GRID ===== */
-.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .feature-card {
-  padding: 26px; border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, rgba(24,14,7,0.76), rgba(14,7,3,0.9));
-  border: 1px solid var(--line);
-  position: relative; overflow: hidden;
-  transition: all 0.3s ease;
-}
-.feature-card::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(140deg, rgba(255,107,77,0.04), transparent 40%, rgba(255,179,71,0.06));
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 28px;
+  transition: all 0.25s;
 }
 .feature-card:hover {
   border-color: var(--line-strong);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 30px rgba(255,107,77,0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
 }
-.feature-icon {
-  width: 46px; height: 46px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; margin-bottom: 16px;
-  background: linear-gradient(135deg, rgba(255,107,77,0.2), rgba(255,140,82,0.12));
-  position: relative;
-}
-.feature-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; position: relative; }
-.feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; position: relative; }
+.feature-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 16px; }
+.feature-icon.coral { background: rgba(255,107,77,0.12); }
+.feature-icon.orange { background: rgba(255,140,82,0.12); }
+.feature-icon.gold { background: rgba(255,179,71,0.12); }
+.feature-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
 
 /* ===== HOW IT WORKS ===== */
-.steps-section { background: var(--bg-soft); }
 .steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
 .steps-row::before {
-  content: ""; position: absolute; top: 32px; left: 14%; right: 14%;
+  content: ""; position: absolute; top: 28px; left: 12%; right: 12%;
   height: 1.5px; background: var(--line-strong); z-index: 0;
 }
 .step { text-align: center; position: relative; z-index: 1; }
 .step-num {
-  width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 16px;
+  width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 16px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 24px; font-weight: 700;
-  background: var(--card-strong);
-  border: 2px solid var(--coral);
-  color: var(--coral);
-  box-shadow: 0 0 28px rgba(255,107,77,0.15);
+  font-size: 22px; font-weight: 700;
+  background: var(--card); border: 2px solid var(--coral); color: var(--coral);
 }
 .step h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
 .step p { font-size: 13px; color: var(--text-secondary); }
 
 /* ===== DEMO SHOWCASE ===== */
-.showcase { background: var(--bg); }
+.showcase { background: rgba(20,10,5,0.5); }
 .showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
 .showcase-preview {
   background: var(--card); border: 1px solid var(--line);
@@ -487,14 +460,21 @@ img { display: block; max-width: 100%; }
 .mock-bar { height: 32px; background: rgba(45,28,16,0.6); display: flex; align-items: center; gap: 6px; padding: 0 12px; }
 .mock-dot { width: 8px; height: 8px; border-radius: 50%; }
 .mock-dot.red { background: #ff5f56; } .mock-dot.yellow { background: #ffbd2e; } .mock-dot.green { background: #27c93f; }
-.mock-url {
-  background: var(--card); border-radius: 4px;
-  padding: 3px 10px; font-size: 11px; color: var(--text-muted); margin-left: 8px; flex: 1;
-}
+.mock-url { background: var(--card); border-radius: 4px; padding: 3px 10px; font-size: 11px; color: var(--text-muted); margin-left: 8px; flex: 1; }
 .mock-body { flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--text-secondary); font-size: 13px; }
 .mock-body .mock-title { font-size: 18px; font-weight: 600; color: var(--text); }
 .showcase-info h3 { font-size: 22px; margin-bottom: 12px; }
 .showcase-info p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+
+/* ===== USE CASES ===== */
+.use-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.use-tag {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 50px; padding: 12px 20px;
+  text-align: center; font-size: 14px; color: var(--text-secondary);
+  transition: all 0.2s; cursor: default;
+}
+.use-tag:hover { border-color: var(--coral); color: var(--coral); background: rgba(255,107,77,0.04); }
 
 /* ===== CTA ===== */
 .cta-section { text-align: center; padding: 100px 0; position: relative; }
@@ -504,12 +484,9 @@ img { display: block; max-width: 100%; }
   pointer-events: none;
 }
 .cta-card {
-  background: var(--card-strong);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-lg);
-  padding: 48px; max-width: 560px; margin: 0 auto;
-  position: relative;
-  box-shadow: 0 0 60px rgba(255,107,77,0.06);
+  background: var(--card); border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg); padding: 48px;
+  max-width: 600px; margin: 0 auto; position: relative;
 }
 .cta-card h2 { font-size: 28px; margin-bottom: 12px; }
 .cta-card p { color: var(--text-secondary); margin-bottom: 24px; }
@@ -551,28 +528,27 @@ img { display: block; max-width: 100%; }
   </div>
 </header>
 
+<!-- ====== 第一页：Hero + AI平台 ====== -->
+
 <!-- HERO -->
 <section class="hero">
   <div class="container">
     <div class="hero-layout">
 
       <!-- Left: Image carousel -->
-      <div class="hero-carousel">
-        <div class="hero-carousel-viewport glass-panel" style="background:transparent;border:1px solid var(--line);">
-          <!-- Replace src with your actual product screenshot -->
-          <div class="hero-slide active">
-            <div class="hero-placeholder">
-              <div class="ph-icon">🖥️</div>
-              <div>产品截图 · 后台管理面板</div>
-              <div style="font-size:12px;opacity:0.5">替换为实际产品图片</div>
-            </div>
+      <div class="hero-carousel-viewport" id="heroCarousel">
+        <div class="hero-slide active">
+          <div class="hero-placeholder">
+            <div class="ph-icon">🖥️</div>
+            <div>产品截图 · 后台管理面板</div>
+            <div style="font-size:12px;opacity:0.5">替换为实际产品图片</div>
           </div>
-          <div class="hero-slide">
-            <div class="hero-placeholder" style="background:linear-gradient(135deg, rgba(255,140,82,0.05), rgba(255,179,71,0.03));">
-              <div class="ph-icon">📊</div>
-              <div>城市分站管理 · 数据面板</div>
-              <div style="font-size:12px;opacity:0.5">替换为实际产品图片</div>
-            </div>
+        </div>
+        <div class="hero-slide">
+          <div class="hero-placeholder" style="background:linear-gradient(135deg, rgba(255,140,82,0.05), rgba(255,179,71,0.03));">
+            <div class="ph-icon">📊</div>
+            <div>城市分站管理 · 数据面板</div>
+            <div style="font-size:12px;opacity:0.5">替换为实际产品图片</div>
           </div>
         </div>
       </div>
@@ -611,76 +587,63 @@ img { display: block; max-width: 100%; }
 
     <!-- Stats row -->
     <div class="hero-stats">
-      <div class="stat-card">
-        <span class="num">42,011</span>
-        <span class="label">城市数据</span>
-      </div>
-      <div class="stat-card">
-        <span class="num">100,000+</span>
-        <span class="label">可生成页面</span>
-      </div>
-      <div class="stat-card">
-        <span class="num">4级</span>
-        <span class="label">省市区县覆盖</span>
-      </div>
-      <div class="stat-card">
-        <span class="num">AI</span>
-        <span class="label">智能写作</span>
-      </div>
+      <div class="stat-card"><span class="num">42,011</span><span class="label">城市数据</span></div>
+      <div class="stat-card"><span class="num">100,000+</span><span class="label">可生成页面</span></div>
+      <div class="stat-card"><span class="num">4级</span><span class="label">省市区县覆盖</span></div>
+      <div class="stat-card"><span class="num">AI</span><span class="label">智能写作</span></div>
     </div>
   </div>
 </section>
 
-<!-- MARQUEE: 适用行业 -->
-<section class="marquee-section">
-  <div class="marquee-wrap">
+<!-- AI平台Logo轮播 -->
+<section class="ai-marquee-section">
+  <div class="ai-marquee-wrap">
     <div class="container">
-      <div class="marquee-label">
-        <span>📋 适用于各行各业</span>
+      <div class="ai-marquee-label">
+        <span>✔ AI收录，DeepSeek、豆包、元宝、通义千问、文心一言、Kimi 等主流平台全覆盖</span>
       </div>
-      <div class="marquee-track" id="marqueeTrack">
-        <!-- duplicated for seamless loop -->
-      </div>
+      <div class="ai-logo-track" id="aiLogoTrack"></div>
     </div>
   </div>
 </section>
+
+<!-- ====== 以下为虾小片自有内容 ====== -->
 
 <!-- FEATURES -->
 <section class="section" id="features">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">核心功能</div>
       <h2>一套系统，搞定<span class="accent">全国分站</span></h2>
       <p>从内容生成到搜索引擎收录，全流程自动化。不需要写代码，不需要雇编辑。</p>
     </div>
     <div class="feature-grid">
       <div class="feature-card">
-        <div class="feature-icon">🏙️</div>
+        <div class="feature-icon coral">🏙️</div>
         <h3>城市批量建站</h3>
         <p>内置全国省、市、区县、街道四级城市库。选择行业关键词，一键生成覆盖全部目标城市的独立分站页面。</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🤖</div>
+        <div class="feature-icon orange">🤖</div>
         <h3>AI自动写作</h3>
         <p>接入主流AI大模型，自动为每个城市生成独特的标题、描述和正文内容，避免重复被搜索引擎降权。</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔗</div>
+        <div class="feature-icon gold">🔗</div>
         <h3>多域名灵活绑定</h3>
         <p>支持绑定多个主域名，随机分配。一个站点一套规则，轻松管理多个项目和品牌矩阵。</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📤</div>
+        <div class="feature-icon coral">📤</div>
         <h3>搜索引擎自动推送</h3>
         <p>内置IndexNow推送引擎，新页面生成后自动通知百度、必应等搜索引擎，加速收录排期。</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📋</div>
+        <div class="feature-icon orange">📋</div>
         <h3>模板变量引擎</h3>
         <p>用变量语法编写规则——{城市名}{关键词}{站点名}，系统自动拼出千万条不重复的标题和文案。</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📊</div>
+        <div class="feature-icon gold">📊</div>
         <h3>可视化后台管理</h3>
         <p>控制台实时查看站点数量、分站生成进度、推送状态。批量操作、导出链接，一切尽在掌握。</p>
       </div>
@@ -689,10 +652,9 @@ img { display: block; max-width: 100%; }
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section steps-section" id="how">
+<section class="section" id="how" style="background:rgba(20,10,5,0.5)">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">操作流程</div>
       <h2>四步启动你的<span class="accent">城市站群</span></h2>
       <p>从零到数千个分站上线，一个下午就能搞定。</p>
     </div>
@@ -725,7 +687,6 @@ img { display: block; max-width: 100%; }
 <section class="showcase section" id="demo">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">效果展示</div>
       <h2>看看<span class="accent">实际效果</span></h2>
       <p>以下是一个真实案例——某防水工程公司用虾小片生成的全国分站。</p>
     </div>
@@ -750,6 +711,34 @@ img { display: block; max-width: 100%; }
         <p>覆盖 DeepSeek、豆包、元宝、通义千问、文心一言、Kimi 等主流 AI 平台。</p>
         <a href="xiaxiaopian_backend.html" class="btn btn-outline">查看完整后台演示 →</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>适用于<span class="accent">各行各业</span></h2>
+      <p>只要你的业务有地域属性，就能用虾小片搭建城市分站矩阵。</p>
+    </div>
+    <div class="use-grid">
+      <div class="use-tag">🏗️ 防水补漏</div>
+      <div class="use-tag">🔧 机械制造</div>
+      <div class="use-tag">🏠 本地家政</div>
+      <div class="use-tag">🏥 口腔门诊</div>
+      <div class="use-tag">📦 搬家物流</div>
+      <div class="use-tag">🎓 教育培训</div>
+      <div class="use-tag">🚗 汽车维修</div>
+      <div class="use-tag">💻 小程序开发</div>
+      <div class="use-tag">⚖️ 法律咨询</div>
+      <div class="use-tag">🏢 企业服务</div>
+      <div class="use-tag">🛒 本地团购</div>
+      <div class="use-tag">🌿 除甲醛服务</div>
+      <div class="use-tag">🔌 家电维修</div>
+      <div class="use-tag">🏗️ 装修公司</div>
+      <div class="use-tag">📸 摄影摄像</div>
+      <div class="use-tag">🐾 宠物服务</div>
     </div>
   </div>
 </section>
@@ -781,7 +770,7 @@ img { display: block; max-width: 100%; }
 <script>
 // Hero carousel
 (function() {
-  const slides = document.querySelectorAll('.hero-slide');
+  const slides = document.querySelectorAll('#heroCarousel .hero-slide');
   if (slides.length < 2) return;
   let idx = 0;
   setInterval(() => {
@@ -791,18 +780,26 @@ img { display: block; max-width: 100%; }
   }, 4000);
 })();
 
-// Marquee - industry tags
+// AI platform logo marquee
 (function() {
-  const industries = [
-    '🏗️ 防水补漏', '🔧 机械制造', '🏠 本地家政', '🏥 口腔门诊',
-    '📦 搬家物流', '🎓 教育培训', '🚗 汽车维修', '💻 小程序开发',
-    '⚖️ 法律咨询', '🏢 企业服务', '🛒 本地团购', '🌿 除甲醛服务',
-    '🔌 家电维修', '🏗️ 装修公司', '📸 摄影摄像', '🐾 宠物服务',
-    '🏠 房屋中介', '🔐 开锁换锁', '💐 花店配送', '🧹 保洁清洗',
+  const platforms = [
+    { icon: '🧠', name: 'DeepSeek' },
+    { icon: '🤖', name: '豆包' },
+    { icon: '💎', name: '元宝' },
+    { icon: '📖', name: '文心一言' },
+    { icon: '🌐', name: '通义千问' },
+    { icon: '🚀', name: 'Kimi' },
+    { icon: '🔮', name: '360智脑' },
+    { icon: '⚡', name: '百川智能' },
   ];
-  const track = document.getElementById('marqueeTrack');
-  const html = industries.map(i => `<span class="marquee-item">${i}</span>`).join('');
-  track.innerHTML = html + html; // duplicate for seamless loop
+  const track = document.getElementById('aiLogoTrack');
+  const items = platforms.map(p =>
+    `<div class="ai-logo-item">
+      <div class="ai-logo-img">${p.icon}</div>
+      <span class="ai-logo-name">${p.name}</span>
+    </div>`
+  ).join('');
+  track.innerHTML = items + items; // duplicate for seamless loop
 })();
 </script>
 
