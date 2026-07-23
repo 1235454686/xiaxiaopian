@@ -50,6 +50,7 @@ body {
 /* ===== BACKGROUND LAYER (fixed, non-blocking) ===== */
 .bg-layer {
   position: fixed; inset: 0; pointer-events: none; z-index: -999;
+  transform: translateZ(0); will-change: transform;
 }
 .bg-layer::before {
   content: "";
@@ -59,6 +60,7 @@ body {
     linear-gradient(90deg, rgba(255,107,77,0.03) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: linear-gradient(180deg, rgba(255,255,255,1), transparent 85%);
+  transform: translateZ(0);
 }
 .bg-layer::after {
   content: "";
@@ -67,11 +69,13 @@ body {
     radial-gradient(circle at 25% 18%, rgba(255,107,77,0.18), transparent 45%),
     radial-gradient(circle at 75% 55%, rgba(255,179,71,0.10), transparent 40%);
   filter: blur(80px);
+  transform: translateZ(0);
+  will-change: opacity;
   animation: ambientPulse 14s ease-in-out infinite alternate;
 }
 @keyframes ambientPulse {
-  0% { transform: scale(0.85) rotate(0deg); opacity: 0.5; }
-  100% { transform: scale(1.1) rotate(4deg); opacity: 1; }
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
 }
 
 /* Data flow lines */
@@ -82,8 +86,8 @@ body {
   background: linear-gradient(180deg, transparent, rgba(255,107,77,0.6), transparent);
   opacity: 0.2; pointer-events: none; z-index: 0;
 }
-.page-shell::before { left: 8%; animation: dataFlow 9s linear infinite; }
-.page-shell::after { right: 12%; animation: dataFlow 13s linear infinite; animation-delay: -5s; }
+.page-shell::before { left: 8%; animation: dataFlow 9s linear infinite; transform: translateZ(0); will-change: transform; }
+.page-shell::after { right: 12%; animation: dataFlow 13s linear infinite; animation-delay: -5s; transform: translateZ(0); will-change: transform; }
 @keyframes dataFlow {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
@@ -375,6 +379,7 @@ img { display: block; max-width: 100%; }
 .ai-logo-track {
   display: flex; width: max-content;
   animation: logoMarquee 20s linear infinite;
+  transform: translateZ(0); will-change: transform;
 }
 .ai-logo-track:hover { animation-play-state: paused; }
 @keyframes logoMarquee {
