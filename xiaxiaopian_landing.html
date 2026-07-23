@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>虾小片GEO — AI城市分站批量建站系统</title>
+<meta name="description" content="虾小片GEO城市分站系统，批量生成全国城市分站页面，AI自动写作+搜索引擎推送，让每个城市都能搜到你。">
+<style>
+/* ===== RESET & ROOT ===== */
+:root {
+  --ink: #0b0705;
+  --paper: #1a100a;
+  --card: #23150c;
+  --card-light: #2d1c10;
+  --line: rgba(255,107,77,0.10);
+  --line-strong: rgba(255,107,77,0.18);
+  --coral: #ff6b4d;
+  --coral-light: #ff8c6e;
+  --orange: #ff8c52;
+  --gold: #ffb347;
+  --rose: #ff4d7a;
+  --text: #f5ede6;
+  --text-secondary: #baa390;
+  --text-muted: #7a6a5c;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --max-w: 1200px;
+  --font: "Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--ink);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== UTILITY ===== */
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+.section { padding: 80px 0; }
+.section-head { text-align: center; margin-bottom: 48px; }
+.section-head h2 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; }
+.section-head p { color: var(--text-secondary); font-size: 16px; margin-top: 10px; max-width: 560px; margin-left: auto; margin-right: auto; }
+.accent { color: var(--coral); }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 28px; border-radius: 50px; font-size: 15px; font-weight: 600;
+  cursor: pointer; text-decoration: none; transition: all 0.2s; border: none;
+}
+.btn-primary { background: var(--coral); color: #fff; box-shadow: 0 4px 20px rgba(255,107,77,0.3); }
+.btn-primary:hover { background: #ff7d63; transform: translateY(-1px); box-shadow: 0 6px 28px rgba(255,107,77,0.4); }
+.btn-outline { background: transparent; border: 1.5px solid var(--line-strong); color: var(--text); }
+.btn-outline:hover { border-color: var(--coral); color: var(--coral); }
+.btn-ghost { background: transparent; color: var(--text-secondary); padding: 8px 20px; }
+.btn-ghost:hover { color: var(--coral); }
+
+/* ===== NAV ===== */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 14px 0; transition: background 0.3s; }
+.nav.scrolled { background: rgba(11,7,5,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav .container { display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; text-decoration: none; color: var(--text); }
+.nav-brand .logo-dot { width: 10px; height: 10px; background: var(--coral); border-radius: 50%; box-shadow: 0 0 12px var(--coral); }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color 0.15s; }
+.nav-links a:hover { color: var(--text); }
+
+/* ===== HERO ===== */
+.hero { padding: 140px 0 80px; text-align: center; position: relative; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(255,107,77,0.10), transparent 60%);
+  pointer-events: none;
+}
+.hero h1 { font-size: 48px; font-weight: 800; line-height: 1.2; letter-spacing: -1px; position: relative; }
+.hero h1 .highlight { background: linear-gradient(135deg, var(--coral), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { font-size: 18px; color: var(--text-secondary); margin: 20px auto 32px; max-width: 600px; }
+.hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.hero-stats { display: flex; gap: 40px; justify-content: center; margin-top: 48px; flex-wrap: wrap; }
+.hero-stat { text-align: center; }
+.hero-stat .num { font-size: 28px; font-weight: 700; color: var(--coral); }
+.hero-stat .label { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+/* ===== FEATURE GRID ===== */
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.feature-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 28px; transition: all 0.25s;
+}
+.feature-card:hover { border-color: var(--line-strong); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+.feature-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 16px; }
+.feature-icon.coral { background: rgba(255,107,77,0.12); }
+.feature-icon.orange { background: rgba(255,140,82,0.12); }
+.feature-icon.gold { background: rgba(255,179,71,0.12); }
+.feature-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ===== HOW IT WORKS ===== */
+.steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.steps-row::before {
+  content: ""; position: absolute; top: 28px; left: 12%; right: 12%;
+  height: 1.5px; background: var(--line-strong); z-index: 0;
+}
+.step { text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700;
+  background: var(--card); border: 2px solid var(--coral); color: var(--coral);
+}
+.step h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.step p { font-size: 13px; color: var(--text-secondary); }
+
+/* ===== DEMO SHOWCASE ===== */
+.showcase { background: var(--paper); }
+.showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+.showcase-preview {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 20px; aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--text-muted); position: relative; overflow: hidden;
+}
+.showcase-preview .mock-browser {
+  width: 100%; height: 100%; background: var(--ink); border-radius: 8px;
+  border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden;
+}
+.mock-bar { height: 32px; background: var(--card-light); display: flex; align-items: center; gap: 6px; padding: 0 12px; }
+.mock-dot { width: 8px; height: 8px; border-radius: 50%; }
+.mock-dot.red { background: #ff5f56; } .mock-dot.yellow { background: #ffbd2e; } .mock-dot.green { background: #27c93f; }
+.mock-url { background: var(--card); border-radius: 4px; padding: 3px 10px; font-size: 11px; color: var(--text-muted); margin-left: 8px; flex: 1; }
+.mock-body { flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--text-secondary); font-size: 13px; }
+.mock-body .mock-title { font-size: 18px; font-weight: 600; color: var(--text); }
+.showcase-info h3 { font-size: 22px; margin-bottom: 12px; }
+.showcase-info p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+
+/* ===== USE CASES ===== */
+.use-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.use-tag {
+  background: var(--card); border: 1px solid var(--line); border-radius: 50px;
+  padding: 12px 20px; text-align: center; font-size: 14px; color: var(--text-secondary);
+  transition: all 0.2s; cursor: default;
+}
+.use-tag:hover { border-color: var(--coral); color: var(--coral); background: rgba(255,107,77,0.04); }
+
+/* ===== CTA ===== */
+.cta-section { text-align: center; padding: 100px 0; position: relative; }
+.cta-section::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,107,77,0.08), transparent 60%);
+  pointer-events: none;
+}
+.cta-card {
+  background: var(--card); border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+  padding: 48px; max-width: 600px; margin: 0 auto; position: relative;
+}
+.cta-card h2 { font-size: 28px; margin-bottom: 12px; }
+.cta-card p { color: var(--text-secondary); margin-bottom: 24px; }
+.price { font-size: 42px; font-weight: 800; color: var(--coral); margin-bottom: 20px; }
+.price small { font-size: 16px; color: var(--text-muted); font-weight: 400; }
+
+/* ===== FOOTER ===== */
+.footer { border-top: 1px solid var(--line); padding: 40px 0; text-align: center; }
+.footer p { color: var(--text-muted); font-size: 13px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 32px; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .steps-row { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .steps-row::before { display: none; }
+  .showcase-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="#" class="nav-brand"><span class="logo-dot"></span>虾小片GEO</a>
+    <div class="nav-links">
+      <a href="#features">功能</a>
+      <a href="#how">流程</a>
+      <a href="#demo">演示</a>
+      <a href="#buy">购买</a>
+    </div>
+    <a href="#buy" class="btn btn-primary" style="padding:8px 20px;font-size:13px">立即购买</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1>让每个城市<br>都能<span class="highlight">搜到你</span></h1>
+    <p>虾小片GEO城市分站系统 — 输入关键词，自动生成覆盖全国的数千个城市分站页面。AI写内容、自动推送搜索引擎，让你的业务在每个城市都有独立着陆页。</p>
+    <div class="hero-actions">
+      <a href="#buy" class="btn btn-primary">立即购买 ¥2980</a>
+      <a href="xiaxiaopian_backend.html" class="btn btn-outline">🔍 查看演示后台</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">42,011</div><div class="label">城市数据</div></div>
+      <div class="hero-stat"><div class="num">100,000+</div><div class="label">可生成页面</div></div>
+      <div class="hero-stat"><div class="num">4级</div><div class="label">省市区县覆盖</div></div>
+      <div class="hero-stat"><div class="num">AI</div><div class="label">智能写作</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <h2>一套系统，搞定<span class="accent">全国分站</span></h2>
+      <p>从内容生成到搜索引擎收录，全流程自动化。不需要写代码，不需要雇编辑。</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon coral">🏙️</div>
+        <h3>城市批量建站</h3>
+        <p>内置全国省、市、区县、街道四级城市库。选择行业关键词，一键生成覆盖全部目标城市的独立分站页面。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon orange">🤖</div>
+        <h3>AI自动写作</h3>
+        <p>接入主流AI大模型，自动为每个城市生成独特的标题、描述和正文内容，避免重复被搜索引擎降权。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon gold">🔗</div>
+        <h3>多域名灵活绑定</h3>
+        <p>支持绑定多个主域名，随机分配。一个站点一套规则，轻松管理多个项目和品牌矩阵。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon coral">📤</div>
+        <h3>搜索引擎自动推送</h3>
+        <p>内置IndexNow推送引擎，新页面生成后自动通知百度、必应等搜索引擎，加速收录排期。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon orange">📋</div>
+        <h3>模板变量引擎</h3>
+        <p>用变量语法编写规则——{城市名}{关键词}{站点名}，系统自动拼出千万条不重复的标题和文案。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon gold">📊</div>
+        <h3>可视化后台管理</h3>
+        <p>控制台实时查看站点数量、分站生成进度、推送状态。批量操作、导出链接，一切尽在掌握。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how" style="background:var(--paper)">
+  <div class="container">
+    <div class="section-head">
+      <h2>四步启动你的<span class="accent">城市站群</span></h2>
+      <p>从零到数千个分站上线，一个下午就能搞定。</p>
+    </div>
+    <div class="steps-row">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>创建站点</h4>
+        <p>填公司名、电话、身份标签，绑域名</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>配置规则</h4>
+        <p>设标题模板、关键词库和生成策略</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>一键生成</h4>
+        <p>选城市范围，提交任务，后台异步执行</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>收录上线</h4>
+        <p>自动推送搜索引擎，等待收录排名</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="showcase section" id="demo">
+  <div class="container">
+    <div class="section-head">
+      <h2>看看<span class="accent">实际效果</span></h2>
+      <p>以下是一个真实案例——某防水工程公司用虾小片生成的全国分站。</p>
+    </div>
+    <div class="showcase-grid">
+      <div class="showcase-preview">
+        <div class="mock-browser">
+          <div class="mock-bar">
+            <span class="mock-dot red"></span><span class="mock-dot yellow"></span><span class="mock-dot green"></span>
+            <span class="mock-url">pudong-fs.sh.xiaxiaopian.cn</span>
+          </div>
+          <div class="mock-body">
+            <div class="mock-title">浦东屋面防水补漏优质厂家</div>
+            <div>浦东屋面防水补漏，陆家嘴|张江|金桥防水施工公司</div>
+            <div style="color:var(--coral);margin-top:8px">📞 138****6789</div>
+            <div style="color:var(--text-muted);font-size:11px">浦东 ● 防水补漏专家 ● 10年施工经验</div>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-info">
+        <h3>每个城市一个页面，<br>每个页面都是<span class="accent">精准流量入口</span></h3>
+        <p>当用户在 DeepSeek、豆包、元宝等 AI 搜索平台输入"浦东防水补漏"时，你的分站页面就会被收录并展示——这就是 GEO 的核心价值。</p>
+        <p>覆盖 DeepSeek、豆包、元宝、通义千问、文心一言、Kimi 等主流 AI 平台。</p>
+        <a href="xiaxiaopian_backend.html" class="btn btn-outline">查看完整后台演示 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>适用于<span class="accent">各行各业</span></h2>
+      <p>只要你的业务有地域属性，就能用虾小片搭建城市分站矩阵。</p>
+    </div>
+    <div class="use-grid">
+      <div class="use-tag">🏗️ 防水补漏</div>
+      <div class="use-tag">🔧 机械制造</div>
+      <div class="use-tag">🏠 本地家政</div>
+      <div class="use-tag">🏥 口腔门诊</div>
+      <div class="use-tag">📦 搬家物流</div>
+      <div class="use-tag">🎓 教育培训</div>
+      <div class="use-tag">🚗 汽车维修</div>
+      <div class="use-tag">💻 小程序开发</div>
+      <div class="use-tag">⚖️ 法律咨询</div>
+      <div class="use-tag">🏢 企业服务</div>
+      <div class="use-tag">🛒 本地团购</div>
+      <div class="use-tag">🌿 除甲醛服务</div>
+      <div class="use-tag">🔌 家电维修</div>
+      <div class="use-tag">🏗️ 装修公司</div>
+      <div class="use-tag">📸 摄影摄像</div>
+      <div class="use-tag">🐾 宠物服务</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="buy">
+  <div class="container">
+    <div class="cta-card">
+      <h2>准备好<span class="accent">霸屏</span>了吗？</h2>
+      <p>一套系统，全国分站。一个价格，终身使用。</p>
+      <div class="price">¥2980 <small>/ 永久授权</small></div>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:-10px;margin-bottom:20px">一套一码 · IP绑定 · 免费升级 · 售后技术支持</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="#" class="btn btn-primary" style="font-size:16px;padding:14px 36px">立即下单购买</a>
+        <a href="xiaxiaopian_backend.html" class="btn btn-outline">先看演示后台</a>
+      </div>
+      <p style="margin-top:16px;font-size:12px;color:var(--text-muted)">扫码咨询客服 · 了解部署细节与行业适配方案</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p>虾小片GEO 城市站群系统 © 2026 | AI驱动 · 批量建站 · 搜索引擎优化</p>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+</script>
+
+</body>
+</html>

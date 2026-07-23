@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>直播间守则</title>
+<style>
+  @page {
+    size: A3 landscape;
+    margin: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    padding: 32px 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .poster {
+    width: 1188px;
+    min-height: 840px;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    overflow: hidden;
+  }
+
+  /* ── 顶部标题栏 ── */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 36px 52px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .header-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .header-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: #00d4aa;
+    stroke-width: 1.8;
+  }
+
+  .header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 4px;
+  }
+
+  .header .subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 4px;
+    letter-spacing: 2px;
+  }
+
+  .header .divider-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    margin: 0 8px;
+  }
+
+  /* ── 主体内容区 ── */
+  .body {
+    padding: 36px 52px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 36px;
+  }
+
+  /* ── 每条规则卡片 ── */
+  .rule {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 18px 20px;
+    border-radius: 10px;
+    background: #fafbfc;
+    border: 1px solid #eef0f2;
+    transition: background 0.2s;
+  }
+
+  .rule:hover {
+    background: #f5f7fa;
+  }
+
+  .rule-num {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #1a1a2e;
+    color: #00d4aa;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  .rule-content h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .rule-content ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .rule-content li {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.9;
+    padding-left: 16px;
+    position: relative;
+    letter-spacing: 0.3px;
+  }
+
+  .rule-content li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #00d4aa;
+  }
+
+  .rule-content li strong {
+    color: #e74c3c;
+    font-weight: 600;
+  }
+
+  .rule-content li .highlight {
+    color: #e74c3c;
+    font-weight: 600;
+  }
+
+  /* ── 底部处罚栏 ── */
+  .footer-bar {
+    margin: 0 52px 28px;
+    padding: 20px 28px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    color: #fff;
+  }
+
+  .footer-bar .penalty-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    color: #00d4aa;
+  }
+
+  .penalty-flow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .penalty-step {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .penalty-step.s1 { background: rgba(255,255,255,0.12); color: #fff; }
+  .penalty-step.s2 { background: rgba(243,156,18,0.25); color: #f39c12; }
+  .penalty-step.s3 { background: rgba(231,76,60,0.25); color: #e74c3c; }
+  .penalty-step.s4 { background: rgba(231,76,60,0.35); color: #ff6b6b; }
+
+  .penalty-arrow {
+    color: rgba(255,255,255,0.3);
+    font-size: 14px;
+  }
+
+  .reward-badge {
+    margin-left: auto;
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: rgba(0,212,170,0.15);
+    color: #00d4aa;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  /* ── 底部公司名 ── */
+  .company-name {
+    text-align: center;
+    padding: 0 0 24px;
+    font-size: 12px;
+    color: #bbb;
+    letter-spacing: 3px;
+  }
+
+  /* ── 打印样式 ── */
+  @media print {
+    body {
+      background: #fff;
+      padding: 0;
+      margin: 0;
+    }
+    .poster {
+      box-shadow: none;
+      width: 100%;
+      page-break-after: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="poster">
+
+  <!-- 标题 -->
+  <div class="header">
+    <div class="header-icon">
+      <svg viewBox="0 0 24 24">
+        <polygon points="12,2 22,8 22,16 12,22 2,16 2,8"/>
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2" x2="12" y2="8"/>
+      </svg>
+    </div>
+    <div>
+      <h1>直 播 间 守 则</h1>
+      <div class="subtitle">马伶薯 · 直播管理制度</div>
+    </div>
+  </div>
+
+  <!-- 规则内容 -->
+  <div class="body">
+
+    <!-- 一、出勤与纪律 -->
+    <div class="rule">
+      <div class="rule-num">1</div>
+      <div class="rule-content">
+        <h3>出勤与纪律</h3>
+        <ul>
+          <li>开播前 <strong>30分钟</strong> 到岗，调试设备、准备直播</li>
+          <li>严格按排播表直播，<strong>不得随意改时间、早退、挂机</strong></li>
+          <li>迟到乐捐 <strong>20元起</strong>，多次违规加重处罚</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 二、形象与开播 -->
+    <div class="rule">
+      <div class="rule-num">2</div>
+      <div class="rule-content">
+        <h3>形象与开播</h3>
+        <ul>
+          <li>妆容整齐、发型得体，衣着符合直播风格</li>
+          <li>每日开播前发 <strong>开播形象照</strong></li>
+          <li>下播发 <strong>下播截图 + 当日数据</strong></li>
+          <li>直播标题积极合规，不擦边、不违规引流</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 三、环境与卫生 -->
+    <div class="rule">
+      <div class="rule-num">3</div>
+      <div class="rule-content">
+        <h3>环境与卫生</h3>
+        <ul>
+          <li>个人物品统一收纳，<strong>不堆在镜头内、桌面、地上</strong></li>
+          <li>不吃异味重食物、不躺卧、不抽烟</li>
+          <li>下播整理桌面、垃圾带走、设备归位</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 四、行为规范 -->
+    <div class="rule">
+      <div class="rule-num">4</div>
+      <div class="rule-content">
+        <h3>行为规范</h3>
+        <ul>
+          <li>同公司主播连麦PK <strong>一天不超过3次</strong></li>
+          <li><strong>严禁</strong>抢大哥、挖粉丝、背后议论、挑拨矛盾</li>
+          <li>礼貌对待所有粉丝，重点维护 <strong>16级灯牌用户</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 五、设备管理 -->
+    <div class="rule">
+      <div class="rule-num">5</div>
+      <div class="rule-content">
+        <h3>设备管理</h3>
+        <ul>
+          <li>爱护公司设备（声卡、灯、支架、手机等），轻拿轻放</li>
+          <li>故障 <strong>立即上报</strong>，不私自拆改、带走</li>
+          <li>人为损坏/丢失 <strong>照价赔偿</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 六、团队协作 -->
+    <div class="rule">
+      <div class="rule-num">6</div>
+      <div class="rule-content">
+        <h3>团队协作</h3>
+        <ul>
+          <li><strong>每周一次周会</strong>，必须参加，复盘+安排工作</li>
+          <li><strong>每月一次团建</strong>，无特殊情况全员参与</li>
+          <li>公会赛期间（3个月）<strong>全员配合</strong></li>
+          <li>新人满月庆：公司策划，主播配合互动</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 七、问题反馈 -->
+    <div class="rule">
+      <div class="rule-num">7</div>
+      <div class="rule-content">
+        <h3>问题反馈</h3>
+        <ul>
+          <li>直播遇到问题（警告、纠纷、设备故障）<strong>及时上报运营</strong></li>
+          <li>遵守平台规则，不辱骂、不低俗内容</li>
+          <li>服从运营安排，维护团队氛围</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 底部处罚与奖励栏 -->
+  <div class="footer-bar">
+    <span class="penalty-title">⚠ 违规处罚</span>
+    <div class="penalty-flow">
+      <span class="penalty-step s1">提醒</span>
+      <span class="penalty-arrow">→</span>
+      <span class="penalty-step s2">乐捐</span>
+      <span class="penalty-arrow">→</span>
+      <span class="penalty-step s3">停播</span>
+      <span class="penalty-arrow">→</span>
+      <span class="penalty-step s4">解约</span>
+    </div>
+    <span class="reward-badge">✓ 配合度高/数据好 → 流量扶持 + 奖励</span>
+  </div>
+
+  <div class="company-name">马伶薯传媒 · 直播间管理制度</div>
+
+</div>
+
+</body>
+</html>

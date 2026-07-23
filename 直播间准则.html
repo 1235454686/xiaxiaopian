@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>直播间准则</title>
+<style>
+  @page { size: A3; margin: 0; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", system-ui, sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    padding: 32px 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .poster {
+    width: 840px;
+    min-height: 594px;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    overflow: hidden;
+  }
+
+  /* ── 顶部 ── */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 40px 60px 34px;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 8px;
+  }
+
+  .header .subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 8px;
+    letter-spacing: 3px;
+  }
+
+  /* ── 规则列表 ── */
+  .rules {
+    padding: 40px 72px 32px;
+  }
+
+  .rule-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .rule-item:last-child {
+    border-bottom: none;
+  }
+
+  .rule-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #1a1a2e;
+    color: #00d4aa;
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: "Georgia", serif;
+  }
+
+  .rule-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c2c2c;
+    letter-spacing: 1px;
+    line-height: 1.5;
+  }
+
+  .rule-text em {
+    font-style: normal;
+    color: #e74c3c;
+  }
+
+  /* ── 底部 ── */
+  .footer-bar {
+    margin: 0 72px 36px;
+    padding: 20px 28px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .footer-bar p {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  .footer-bar .enforce {
+    color: #00d4aa;
+  }
+
+  /* ── 打印 ── */
+  @media print {
+    body { background: #fff; padding: 0; margin: 0; }
+    .poster { box-shadow: none; width: 100%; page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="poster">
+
+  <div class="header">
+    <h1>直 播 间 准 则</h1>
+    <div class="subtitle">马伶薯 · 直播管理制度</div>
+  </div>
+
+  <div class="rules">
+
+    <div class="rule-item">
+      <div class="rule-num">1</div>
+      <div class="rule-text">开播前<em>30分钟</em>到岗，迟到乐捐<em>20元起</em></div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-num">2</div>
+      <div class="rule-text">妆容整洁，物品不乱放，<em>下播后整理卫生</em></div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-num">3</div>
+      <div class="rule-text">开播照、下播数据<em>每日必发</em></div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-num">4</div>
+      <div class="rule-text">同公司连麦<em>不超过3次</em>，不抢大哥</div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-num">5</div>
+      <div class="rule-text">爱护设备，损坏<em>照价赔偿</em></div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-num">6</div>
+      <div class="rule-text">按时周会，配合公司活动</div>
+    </div>
+
+  </div>
+
+  <div class="footer-bar">
+    <p>本制度自发布之日起执行，所有主播必须<span class="enforce">严格遵守</span></p>
+  </div>
+
+</div>
+
+</body>
+</html>
