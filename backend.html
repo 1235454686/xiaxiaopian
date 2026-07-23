@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>虾小片GEO · 工作台</title>
+<style>
+:root {
+  --bg: #faf6f2;
+  --surface: #ffffff;
+  --surface2: #f5ede4;
+  --border: #e8dbcc;
+  --border2: #d9c8b4;
+  --ink: #2d1f14;
+  --ink2: #5c4635;
+  --ink3: #8c7560;
+  --coral: #e85d3f;
+  --coral-light: #ff7d63;
+  --orange: #e87830;
+  --gold: #c89530;
+  --green: #5b9a4b;
+  --blue: #4a8fc9;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --font: "Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6}
+a{color:var(--coral);text-decoration:none}a:hover{color:var(--coral-light)}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:0 28px;height:56px;display:flex;align-items:center;gap:0;
+  position:sticky;top:0;z-index:100;
+}
+.topbar .logo{font-weight:800;font-size:16px;color:var(--coral);margin-right:32px;white-space:nowrap}
+.topbar nav{display:flex;gap:0;height:100%}
+.topbar nav a{
+  display:flex;align-items:center;padding:0 18px;font-size:13px;font-weight:500;
+  color:var(--ink3);border-bottom:2px solid transparent;transition:all .15s;
+}
+.topbar nav a:hover{color:var(--ink2);background:var(--surface2)}
+.topbar nav a.on{color:var(--coral);border-bottom-color:var(--coral);font-weight:600}
+.topbar .right{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:12px;color:var(--ink3)}
+.topbar .right .demo{background:#fff3e8;color:var(--orange);padding:3px 10px;border-radius:10px;font-weight:600;font-size:11px}
+
+/* ===== CONTENT ===== */
+.content{max-width:1100px;margin:0 auto;padding:32px 28px}
+.panel{display:none}
+.panel.show{display:block}
+
+/* ===== PAGE HEADER ===== */
+.page-header{margin-bottom:28px}
+.page-header h1{font-size:24px;font-weight:700;letter-spacing:-0.3px}
+.page-header p{color:var(--ink3);font-size:14px;margin-top:4px}
+
+/* ===== METRIC ROW ===== */
+.metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:28px}
+.metric{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:20px 22px;transition:all .2s
+}
+.metric:hover{border-color:var(--border2);box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.metric .val{font-size:30px;font-weight:700;color:var(--coral)}
+.metric .lbl{font-size:12px;color:var(--ink3);margin-top:4px}
+
+/* ===== CARD ===== */
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:24px;margin-bottom:18px
+}
+.card h3{font-size:15px;font-weight:600;margin-bottom:14px;color:var(--ink)}
+.card p{color:var(--ink2);font-size:13px;line-height:1.7}
+
+/* ===== TABLE ===== */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:10px 12px;color:var(--ink3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--ink2)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--surface2)}
+.pill{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:500}
+.pill-green{background:#edf7ea;color:var(--green)}
+.pill-blue{background:#ecf3fa;color:var(--blue)}
+.pill-orange{background:#fff3e8;color:var(--orange)}
+
+/* ===== FORM ===== */
+.fields{display:flex;gap:14px;flex-wrap:wrap}
+.field{flex:1;min-width:180px}
+.field label{display:block;font-size:12px;color:var(--ink3);margin-bottom:4px;font-weight:500}
+.field input,.field select,.field textarea{
+  width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);
+  font-size:13px;font-family:inherit;color:var(--ink);background:var(--surface2);
+  transition:border-color .15s
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--coral);background:var(--surface)}
+.field textarea{resize:vertical;min-height:70px}
+.field select{cursor:pointer}
+
+/* ===== BUTTONS ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);
+  font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .15s
+}
+.btn-fill{background:var(--coral);color:#fff}
+.btn-fill:hover{background:#cf4f35}
+.btn-stroke{background:transparent;border:1.5px solid var(--border2);color:var(--ink2)}
+.btn-stroke:hover{border-color:var(--coral);color:var(--coral)}
+.btn-sm{padding:5px 12px;font-size:11px}
+
+/* ===== CODE ===== */
+.code{
+  background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;font-family:"Cascadia Code","Fira Code","Consolas",monospace;
+  font-size:12px;color:var(--coral);white-space:pre-wrap;line-height:2;overflow-x:auto
+}
+
+/* ===== TAGS ===== */
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  background:var(--surface2);border:1px solid var(--border);padding:6px 14px;
+  border-radius:20px;font-size:12px;color:var(--ink2);cursor:pointer;transition:all .15s
+}
+.tag:hover{border-color:var(--coral);color:var(--coral)}
+.tag.on{background:#fff0eb;border-color:var(--coral);color:var(--coral)}
+
+/* ===== DOMAINS ===== */
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:11px;background:var(--surface2);border:1px solid var(--border);padding:4px 9px;border-radius:5px;color:var(--ink2)}
+
+/* ===== GRID 2-COL ===== */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+/* ===== PAGE NAV ===== */
+.pages{display:flex;gap:5px;justify-content:center;padding:10px 0}
+.pages button{
+  padding:5px 11px;border:1px solid var(--border);border-radius:5px;
+  background:var(--surface);color:var(--ink2);cursor:pointer;font-size:12px
+}
+.pages button.on{background:var(--coral);border-color:var(--coral);color:#fff}
+
+/* ===== ALERT ===== */
+.alert{padding:12px 16px;border-radius:var(--radius);font-size:13px;margin-bottom:16px}
+.alert-warn{background:#fff8f0;border:1px solid #f0d8b0;color:#8c6820}
+.alert-info{background:#fff5f0;border:1px solid #f5d0c0;color:var(--coral)}
+
+/* ===== WORKFLOW STEPS ===== */
+.wf{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.wf-step{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:22px;text-align:center
+}
+.wf-num{width:40px;height:40px;border-radius:50%;background:var(--surface2);border:2px solid var(--coral);color:var(--coral);display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;margin-bottom:10px}
+.wf-step h4{font-size:14px;margin-bottom:4px}
+.wf-step p{font-size:12px;color:var(--ink3)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .topbar nav a{padding:0 10px;font-size:11px}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+  .wf{grid-template-columns:repeat(2,1fr)}
+  .fields{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <span class="logo">🦐 虾小片GEO</span>
+  <nav>
+    <a href="#" class="on" data-panel="dashboard">工作台</a>
+    <a href="#" data-panel="project">项目</a>
+    <a href="#" data-panel="engine">引擎</a>
+    <a href="#" data-panel="tasks">任务</a>
+    <a href="#" data-panel="results">结果</a>
+    <a href="#" data-panel="system">系统</a>
+  </nav>
+  <div class="right">
+    <span class="demo">演示模式</span>
+    <span>demo</span>
+  </div>
+</header>
+
+<!-- ===== CONTENT ===== -->
+<div class="content">
+
+  <!-- ============ DASHBOARD ============ -->
+  <div class="panel show" id="panel-dashboard">
+    <div class="page-header">
+      <h1>工作台</h1>
+      <p>虾小片GEO城市分站系统 · 当前演示模式</p>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="val">3</div><div class="lbl">活跃项目</div></div>
+      <div class="metric"><div class="val">108,523</div><div class="lbl">已生成分站</div></div>
+      <div class="metric"><div class="val">42,011</div><div class="lbl">城市数据</div></div>
+      <div class="metric"><div class="val">12</div><div class="lbl">绑定域名</div></div>
+      <div class="metric"><div class="val">329</div><div class="lbl">可用AI模型</div></div>
+      <div class="metric"><div class="val">98%</div><div class="lbl">推送成功率</div></div>
+    </div>
+
+    <div class="wf">
+      <div class="wf-step"><div class="wf-num">1</div><h4>创建项目</h4><p>填写企业信息，绑定域名</p></div>
+      <div class="wf-step"><div class="wf-num">2</div><h4>配置规则</h4><p>设定标题模板和关键词</p></div>
+      <div class="wf-step"><div class="wf-num">3</div><h4>生成分站</h4><p>选择城市范围，一键生成</p></div>
+      <div class="wf-step"><div class="wf-num">4</div><h4>收录上线</h4><p>自动推送搜索引擎</p></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>📁 项目概览</h3>
+        <table class="tbl">
+          <tr><th>项目名称</th><th>分站数</th><th>域名</th><th>状态</th></tr>
+          <tr><td>沪上防水工程</td><td>42,150</td><td><span class="chip">sh.xiaxiaopian.cn</span></td><td><span class="pill pill-green">运行中</span></td></tr>
+          <tr><td>鹏程机械制造</td><td>38,720</td><td><span class="chip">sz.xiaxiaopian.cn</span></td><td><span class="pill pill-green">运行中</span></td></tr>
+          <tr><td>悦家本地生活</td><td>27,653</td><td><span class="chip">cd.xiaxiaopian.cn</span></td><td><span class="pill pill-blue">运行中</span></td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>📄 最新生成</h3>
+        <table class="tbl">
+          <tr><th>城市</th><th>页面标题</th></tr>
+          <tr><td>上海浦东</td><td style="font-size:12px">浦东屋面防水补漏优质厂家_沪上防水</td></tr>
+          <tr><td>深圳南山</td><td style="font-size:12px">南山数控机床配件源头厂家-鹏程机械</td></tr>
+          <tr><td>成都武侯</td><td style="font-size:12px">武侯区家政保洁服务公司-悦家生活</td></tr>
+          <tr><td>北京朝阳</td><td style="font-size:12px">朝阳区屋面防水施工公司_沪上防水</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PROJECT ============ -->
+  <div class="panel" id="panel-project">
+    <div class="page-header">
+      <h1>项目管理</h1>
+      <p>创建和管理你的城市分站项目，绑定域名与品牌信息。</p>
+    </div>
+
+    <div class="card">
+      <h3>➕ 新建项目</h3>
+      <div class="fields">
+        <div class="field"><label>项目名称</label><input placeholder="如：沪上防水工程"></div>
+        <div class="field"><label>联系人</label><input placeholder="联系人姓名"></div>
+        <div class="field"><label>联系电话</label><input placeholder="联系电话"></div>
+      </div>
+      <div class="fields" style="margin-top:10px">
+        <div class="field"><label>身份标签（一行一个）</label><textarea rows="2">厂家 供货商 公司 工厂 源头厂家</textarea></div>
+        <div class="field"><label>营销短句（一行一个）</label><textarea rows="2">厂家电话 免费咨询 在线报价 本地服务</textarea></div>
+      </div>
+      <div style="margin-top:12px"><button class="btn btn-fill">保存项目</button></div>
+    </div>
+
+    <div class="card">
+      <h3>📁 已有项目</h3>
+      <table class="tbl">
+        <tr><th>名称</th><th>绑定域名</th><th>生成数</th><th>状态</th></tr>
+        <tr><td>沪上防水工程</td><td><div class="chips"><span class="chip">sh.xiaxiaopian.cn</span><span class="chip">sh-fs.xiaxiaopian.cn</span></div></td><td>42,150</td><td><span class="pill pill-green">启用</span></td></tr>
+        <tr><td>鹏程机械制造</td><td><div class="chips"><span class="chip">sz.xiaxiaopian.cn</span><span class="chip">pengcheng-jx.cn</span></div></td><td>38,720</td><td><span class="pill pill-green">启用</span></td></tr>
+        <tr><td>悦家本地生活</td><td><div class="chips"><span class="chip">cd.xiaxiaopian.cn</span></div></td><td>27,653</td><td><span class="pill pill-blue">启用</span></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🔗 域名池</h3>
+      <p style="margin-bottom:12px">统一管理所有可用主域名，项目可绑定多个。</p>
+      <table class="tbl">
+        <tr><th>域名</th><th>绑定项目数</th><th>状态</th></tr>
+        <tr><td>sh.xiaxiaopian.cn</td><td>1</td><td><span class="pill pill-green">已绑定</span></td></tr>
+        <tr><td>sz.xiaxiaopian.cn</td><td>2</td><td><span class="pill pill-green">已绑定</span></td></tr>
+        <tr><td>cd.xiaxiaopian.cn</td><td>1</td><td><span class="pill pill-green">已绑定</span></td></tr>
+        <tr><td>sh-fs.xiaxiaopian.cn</td><td>1</td><td><span class="pill pill-green">已绑定</span></td></tr>
+        <tr><td>pengcheng-jx.cn</td><td>1</td><td><span class="pill pill-green">已绑定</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============ ENGINE ============ -->
+  <div class="panel" id="panel-engine">
+    <div class="page-header">
+      <h1>内容引擎</h1>
+      <p>配置生成规则、关键词池和城市范围，驱动分站自动生产。</p>
+    </div>
+
+    <div class="card">
+      <h3>📝 标题模板</h3>
+      <p style="margin-bottom:8px">使用变量组合标题，生成时每个城市自动替换。</p>
+      <div class="code">{当前级地区}{随机关键词}{项目名称}|{当前下级区域列表(1)}|{项目名称}官网</div>
+    </div>
+
+    <div class="card">
+      <h3>🔑 关键词模板</h3>
+      <div class="code">{当前页面地区}{随机关键词},{当前下级区域列表(1)}{随机关键词}{身份标签},{随机关键词}{营销短句}</div>
+    </div>
+
+    <div class="card">
+      <h3>📖 描述模板</h3>
+      <div class="code">{项目名称}，专注提供{当前页面地区}{业务简介}相关服务，覆盖{当前下级区域列表(、,3)}，欢迎来电咨询。</div>
+    </div>
+
+    <div class="card">
+      <h3>🔗 网址模板</h3>
+      <div class="code">{city_pinyin}-{keyword_initial}{project_id}-{short_id}.{root_domain}</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>🔑 关键词池</h3>
+        <p style="margin-bottom:8px">项目关联的关键词，生成页面时随机组合。</p>
+        <div class="fields" style="margin-bottom:10px"><div class="field"><textarea rows="3" placeholder="一行一个关键词">防水补漏&#10;屋面防水&#10;外墙防水&#10;地下室防水&#10;卫生间防水</textarea></div></div>
+        <table class="tbl">
+          <tr><th>关键词</th><th>拼音</th><th>首字母</th></tr>
+          <tr><td>防水补漏</td><td>fangshuibulou</td><td>fsbl</td></tr>
+          <tr><td>屋面防水</td><td>wumianfangshui</td><td>wmfs</td></tr>
+          <tr><td>外墙防水</td><td>waiqiangfangshui</td><td>wqfs</td></tr>
+          <tr><td>地下室防水</td><td>dixiashifangshui</td><td>dxsfs</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>🏙️ 城市库</h3>
+        <p style="margin-bottom:8px">内置全国四级行政区划，共 42,011 条。</p>
+        <div class="tags" style="margin-bottom:10px">
+          <span class="tag on">全部</span><span class="tag">省级</span><span class="tag">市级</span><span class="tag">区县级</span>
+        </div>
+        <table class="tbl">
+          <tr><th>名称</th><th>完整名称</th><th>层级</th></tr>
+          <tr><td>北京</td><td>北京市</td><td><span class="pill pill-blue">省级</span></td></tr>
+          <tr><td>上海</td><td>上海市</td><td><span class="pill pill-blue">省级</span></td></tr>
+          <tr><td>深圳</td><td>深圳市</td><td><span class="pill pill-orange">市级</span></td></tr>
+          <tr><td>成都</td><td>成都市</td><td><span class="pill pill-orange">市级</span></td></tr>
+        </table>
+        <div class="pages"><button>‹</button><button class="on">1</button><button>2</button><button>…</button><button>2101</button><button>›</button></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📚 可用变量速查</h3>
+      <div class="tags">
+        <span class="tag">{项目名称}</span><span class="tag">{当前级地区}</span><span class="tag">{当前页面地区}</span>
+        <span class="tag">{随机关键词}</span><span class="tag">{下级区域列表}</span><span class="tag">{身份标签}</span>
+        <span class="tag">{营销短句}</span><span class="tag">{业务简介}</span><span class="tag">{联系电话}</span>
+        <span class="tag">{省}</span><span class="tag">{市}</span><span class="tag">{区县}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TASKS ============ -->
+  <div class="panel" id="panel-tasks">
+    <div class="page-header">
+      <h1>任务中心</h1>
+      <p>提交和管理批量生成任务，异步处理，不阻塞操作。</p>
+    </div>
+
+    <div class="alert alert-warn">演示模式 — 提交功能已禁用。实际使用时可批量生成万级分站。</div>
+
+    <div class="card">
+      <h3>🚀 提交生成任务</h3>
+      <div class="fields">
+        <div class="field"><label>选择项目</label><select><option>沪上防水工程</option><option>鹏程机械制造</option><option>悦家本地生活</option></select></div>
+        <div class="field"><label>目标层级</label><select><option>省级</option><option selected>市级</option><option>区县级</option><option>街道级</option></select></div>
+        <div class="field"><label>执行轮次</label><input type="number" value="1"></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:10px">
+        <button class="btn btn-stroke">🧮 估算数量</button>
+        <button class="btn btn-fill">🚀 提交任务</button>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="val">8</div><div class="lbl">总任务</div></div>
+      <div class="metric"><div class="val">6</div><div class="lbl">已完成</div></div>
+      <div class="metric"><div class="val">0</div><div class="lbl">失败</div></div>
+      <div class="metric"><div class="val">108,523</div><div class="lbl">累计生成</div></div>
+    </div>
+
+    <div class="card">
+      <h3>📤 推送队列</h3>
+      <p style="margin-bottom:10px">IndexNow 自动推送，通知搜索引擎收录新页面。</p>
+      <table class="tbl">
+        <tr><th>URL</th><th>状态</th><th>时间</th></tr>
+        <tr><td style="font-size:12px">https://pudong-fsbl1.sh.xiaxiaopian.cn</td><td><span class="pill pill-green">已推送</span></td><td>13:52</td></tr>
+        <tr><td style="font-size:12px">https://nanshan-skjc2.sz.xiaxiaopian.cn</td><td><span class="pill pill-green">已推送</span></td><td>13:52</td></tr>
+        <tr><td style="font-size:12px">https://wuhou-jz3.cd.xiaxiaopian.cn</td><td><span class="pill pill-orange">排队中</span></td><td>13:53</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============ RESULTS ============ -->
+  <div class="panel" id="panel-results">
+    <div class="page-header">
+      <h1>分站结果</h1>
+      <p>查看和管理已生成的城市分站页面。共 108,523 条。</p>
+    </div>
+
+    <div class="card">
+      <table class="tbl">
+        <tr><th>项目</th><th>城市</th><th>页面标题</th><th>域名</th></tr>
+        <tr>
+          <td>沪上防水</td><td>上海浦东</td>
+          <td style="font-size:12px">浦东屋面防水补漏优质厂家_沪上防水联系方式</td>
+          <td style="font-size:12px;color:var(--coral)">pudong-fsbl1.sh.xiaxiaopian.cn</td>
+        </tr>
+        <tr>
+          <td>沪上防水</td><td>上海徐汇</td>
+          <td style="font-size:12px">徐汇地下室防水施工公司_沪上防水厂家电话</td>
+          <td style="font-size:12px;color:var(--coral)">xuhui-dxsfs1.sh.xiaxiaopian.cn</td>
+        </tr>
+        <tr>
+          <td>鹏程机械</td><td>深圳南山</td>
+          <td style="font-size:12px">南山数控机床配件源头厂家-鹏程机械官网</td>
+          <td style="font-size:12px;color:var(--coral)">nanshan-skjc2.sz.xiaxiaopian.cn</td>
+        </tr>
+        <tr>
+          <td>悦家生活</td><td>成都武侯</td>
+          <td style="font-size:12px">武侯区家政保洁服务公司-悦家本地生活</td>
+          <td style="font-size:12px;color:var(--coral)">wuhou-jz3.cd.xiaxiaopian.cn</td>
+        </tr>
+        <tr>
+          <td>沪上防水</td><td>北京朝阳</td>
+          <td style="font-size:12px">朝阳区屋面防水施工公司_沪上防水厂家电话</td>
+          <td style="font-size:12px;color:var(--coral)">chaoyang-wmfs1.bj.xiaxiaopian.cn</td>
+        </tr>
+      </table>
+      <div class="pages" style="margin-top:10px"><button>‹</button><button class="on">1</button><button>2</button><button>3</button><button>…</button><button>5426</button><button>›</button></div>
+    </div>
+  </div>
+
+  <!-- ============ SYSTEM ============ -->
+  <div class="panel" id="panel-system">
+    <div class="page-header">
+      <h1>系统设置</h1>
+      <p>AI 模型配置、模板管理、媒体库、标签和授权。</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>🤖 AI 模型配置</h3>
+        <div class="fields">
+          <div class="field"><label>API Key</label><input value="sk-********************LdWv" readonly style="font-family:monospace"></div>
+        </div>
+        <div class="fields" style="margin-top:8px">
+          <div class="field"><label>文本模型（一行一个）</label><textarea rows="2">gpt-4o&#10;deepseek-chat&#10;claude-sonnet-4</textarea></div>
+          <div class="field"><label>图片模型（一行一个）</label><textarea rows="2">gpt-image-2&#10;dall-e-3</textarea></div>
+        </div>
+        <p style="font-size:11px;color:var(--ink3);margin-top:6px">可用：329 个文本模型 · 43 个图片模型</p>
+      </div>
+
+      <div class="card">
+        <h3>🎨 首页模板</h3>
+        <table class="tbl">
+          <tr><th>模板</th><th>绑定</th></tr>
+          <tr><td>科技风 · 默认</td><td>全部项目</td></tr>
+          <tr><td>暖色 · 防水行业</td><td>沪上防水</td></tr>
+          <tr><td>工业风 · 机械</td><td>鹏程机械</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>🖼️ 媒体库</h3>
+        <p style="margin-bottom:8px">共 45 个文件</p>
+        <div style="display:flex;gap:12px">
+          <div style="width:80px;height:80px;background:var(--surface2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;border:1px solid var(--border)">🖼️</div>
+          <div style="width:80px;height:80px;background:var(--surface2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;border:1px solid var(--border)">🖼️</div>
+          <div style="width:80px;height:80px;background:var(--surface2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;border:1px solid var(--border)">🖼️</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🏷️ 业务标签</h3>
+        <div class="tags">
+          <span class="tag">防水补漏专家</span><span class="tag">10年施工经验</span><span class="tag">免费上门</span>
+          <span class="tag">质保5年</span><span class="tag">本地服务</span><span class="tag">持证上岗</span>
+          <span class="tag">源头厂家</span><span class="tag">全国发货</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:center;padding:40px">
+      <h3>🔐 授权管理</h3>
+      <p style="color:var(--ink2);margin:8px 0">状态：<strong style="color:var(--green)">已授权</strong> · IP 绑定 · 永久使用</p>
+      <p style="font-size:24px;font-weight:700;color:var(--coral);margin:12px 0">¥2980</p>
+      <button class="btn btn-fill" style="font-size:15px;padding:12px 32px">购买授权 →</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.topbar nav a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.topbar nav a').forEach(l => l.classList.remove('on'));
+    link.classList.add('on');
+    const panelId = link.dataset.panel;
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+    document.getElementById('panel-' + panelId).classList.add('show');
+  });
+});
+</script>
+</body>
+</html>
