@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>虾小片AI · 团队主页</title>
+<style>
+:root{
+  --bg-0:#f4f7fb;
+  --bg-1:#ffffff;
+  --bg-2:#e9eef7;
+  --cyan:#00b894;
+  --cyan-deep:#009174;
+  --cyan-soft:rgba(0,180,148,.10);
+  --ink:#16213e;
+  --muted:rgba(22,33,62,.62);
+  --line:rgba(22,33,62,.10);
+  --font:"Microsoft YaHei UI","Microsoft YaHei",-apple-system,"PingFang SC","Segoe UI",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font);
+  background:var(--bg-0);
+  color:var(--ink);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* ============ 粒子背景（独立fixed层，不碰滚动） ============ */
+#particles{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+}
+.veil{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(1100px 500px at 78% -10%,rgba(233,238,247,.9),transparent 65%),
+    radial-gradient(900px 460px at 8% 108%,rgba(0,180,148,.06),transparent 60%);
+}
+
+/* ============ 导航 ============ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(20px,6vw,72px);
+  transition:background .35s,border-color .35s;
+  border-bottom:1px solid transparent;
+}
+nav.scrolled{
+  background:rgba(255,255,255,.78);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-color:var(--line);
+}
+.brand{font-weight:700;font-size:18px;letter-spacing:.5px}
+.brand .dot{color:var(--cyan-deep)}
+nav .links{display:flex;gap:28px;font-size:14px}
+nav .links a{color:var(--muted);text-decoration:none;transition:color .25s}
+nav .links a:hover{color:var(--cyan-deep)}
+@media(max-width:640px){nav .links{display:none}}
+
+/* ============ 容器 ============ */
+.wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 clamp(20px,6vw,40px)}
+section{padding:clamp(70px,10vh,110px) 0}
+
+/* ============ Hero ============ */
+.hero{
+  min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding-top:90px;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:13px;letter-spacing:3px;color:var(--cyan-deep);
+  border:1px solid var(--cyan-soft);
+  background:rgba(0,180,148,.05);
+  padding:7px 16px;border-radius:999px;width:fit-content;
+  margin-bottom:34px;
+}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px rgba(0,180,148,.5);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{
+  font-size:clamp(38px,7vw,76px);
+  font-weight:800;line-height:1.22;letter-spacing:1px;
+}
+.hero h1 .grad{
+  background:linear-gradient(120deg,#16213e 25%,#00a98f 95%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.typer-line{
+  margin-top:28px;font-size:clamp(17px,2.6vw,23px);
+  color:var(--muted);min-height:2em;
+}
+.typer-line .cursor{
+  display:inline-block;width:2px;height:1.15em;
+  background:var(--cyan);margin-left:4px;vertical-align:-3px;
+  animation:blink 1s steps(1) infinite;
+}
+@keyframes blink{50%{opacity:0}}
+.hero-cta{
+  margin-top:44px;display:flex;gap:16px;flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:50px;padding:0 30px;border-radius:10px;
+  font-size:15px;font-weight:700;text-decoration:none;letter-spacing:1px;
+  transition:transform .2s,box-shadow .25s,background .25s,border-color .25s;
+}
+.btn-main{
+  background:var(--cyan);color:#ffffff;
+}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,180,148,.35)}
+.btn-ghost{border:1px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan-deep)}
+.scroll-hint{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  color:var(--muted);font-size:12px;letter-spacing:2px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.scroll-hint .arrow{width:10px;height:10px;border-right:1.5px solid var(--cyan);border-bottom:1.5px solid var(--cyan);transform:rotate(45deg);animation:drop 1.8s infinite}
+@keyframes drop{0%{transform:rotate(45deg) translate(0,0);opacity:0}30%{opacity:1}100%{transform:rotate(45deg) translate(6px,6px);opacity:0}}
+
+/* ============ 区块标题 ============ */
+.sec-head{margin-bottom:56px}
+.sec-tag{
+  font-size:12px;letter-spacing:4px;color:var(--cyan-deep);
+  display:block;margin-bottom:14px;
+}
+.sec-head h2{font-size:clamp(26px,4.2vw,40px);font-weight:800;letter-spacing:.5px}
+
+/* ============ 目标 ============ */
+.mission{
+  border:1px solid rgba(0,180,148,.30);
+  border-radius:20px;
+  padding:clamp(34px,5.5vw,64px);
+  background:linear-gradient(150deg,rgba(0,180,148,.07),#ffffff 60%);
+  margin-bottom:44px;
+}
+.mission .big{
+  font-size:clamp(26px,4.6vw,44px);
+  font-weight:800;line-height:1.4;letter-spacing:.5px;
+}
+.mission .big .hl{color:var(--cyan-deep)}
+.mission .sub{margin-top:16px;color:var(--muted);font-size:clamp(15px,2vw,17px)}
+.goal-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+}
+@media(max-width:860px){.goal-grid{grid-template-columns:1fr}}
+.goal{
+  border:1px solid var(--line);border-radius:14px;
+  padding:26px 24px;
+  background:var(--bg-1);
+  box-shadow:0 2px 12px rgba(22,33,62,.04);
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+}
+.goal:hover{border-color:rgba(0,180,148,.55);transform:translateY(-4px);box-shadow:0 10px 26px rgba(22,33,62,.08)}
+.goal .g-num{
+  font-size:12px;letter-spacing:3px;color:var(--cyan-deep);display:block;margin-bottom:12px;
+}
+.goal .g-title{font-weight:700;font-size:17px;margin-bottom:8px}
+.goal p{font-size:14px;color:var(--muted)}
+
+/* ============ 业务 ============ */
+.biz-list{display:flex;flex-direction:column;gap:0}
+.biz{
+  display:grid;grid-template-columns:110px 1fr auto;gap:24px;
+  align-items:center;
+  padding:34px 8px;border-top:1px solid var(--line);
+  transition:background .3s,padding .3s;
+}
+.biz:last-child{border-bottom:1px solid var(--line)}
+.biz:hover{background:rgba(0,180,148,.05);padding-left:22px}
+.biz .num{
+  font-size:40px;font-weight:800;color:transparent;
+  -webkit-text-stroke:1px rgba(0,180,148,.55);
+  font-variant-numeric:tabular-nums;
+}
+.biz:hover .num{color:var(--cyan);-webkit-text-stroke:0}
+.biz .name{font-size:clamp(19px,2.6vw,24px);font-weight:700}
+.biz .name small{
+  display:block;font-size:12px;font-weight:400;color:var(--cyan-deep);
+  letter-spacing:2px;margin-top:6px;
+}
+.biz .desc{font-size:14.5px;color:var(--muted);max-width:560px;justify-self:end}
+@media(max-width:760px){
+  .biz{grid-template-columns:56px 1fr;row-gap:10px}
+  .biz .desc{grid-column:2;justify-self:start}
+  .biz .num{font-size:28px}
+}
+
+/* ============ CityMesh 产品条 ============ */
+.citymesh{
+  border:1px solid rgba(0,180,148,.35);
+  border-radius:20px;
+  background:linear-gradient(135deg,rgba(0,180,148,.08),#ffffff 55%);
+  padding:clamp(30px,5vw,52px);
+  display:grid;grid-template-columns:1.2fr 1fr;gap:36px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.citymesh::after{
+  content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;
+  border-radius:50%;border:1px solid rgba(0,180,148,.25);
+  box-shadow:0 0 0 40px rgba(0,180,148,.05),0 0 0 80px rgba(0,180,148,.03);
+}
+@media(max-width:860px){.citymesh{grid-template-columns:1fr}}
+.citymesh .cm-tag{
+  font-size:12px;letter-spacing:3px;color:var(--cyan-deep);margin-bottom:12px;display:block;
+}
+.citymesh h3{font-size:clamp(24px,3.4vw,34px);font-weight:800;margin-bottom:16px}
+.citymesh p{color:var(--muted);font-size:15px}
+.citymesh .cm-points{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.citymesh .cm-points span{font-size:14px;color:var(--ink)}
+.citymesh .cm-points span::before{content:"▸ ";color:var(--cyan-deep)}
+.cm-side{
+  border-left:1px solid rgba(0,180,148,.25);padding-left:36px;
+  display:flex;flex-direction:column;gap:14px;
+}
+@media(max-width:860px){.cm-side{border-left:0;padding-left:0;border-top:1px solid rgba(0,180,148,.25);padding-top:28px}}
+.cm-side .q{font-size:14px;color:var(--muted)}
+.cm-side .a{font-size:18px;font-weight:700}
+
+/* ============ 结尾 CTA ============ */
+.cta{padding-top:20px}
+.cta-box{
+  border:1px solid var(--line);border-radius:20px;
+  padding:clamp(36px,6vw,64px);
+  background:var(--bg-1);
+  box-shadow:0 2px 12px rgba(22,33,62,.04);
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:28px;
+}
+.cta-box h2{font-size:clamp(24px,4vw,38px);font-weight:800}
+.cta-box h2 span{color:var(--cyan-deep)}
+.cta-box .sub{margin-top:12px;color:var(--muted);font-size:15px}
+.cta-pill{
+  display:inline-flex;align-items:center;
+  border:1px solid rgba(0,180,148,.45);border-radius:12px;
+  padding:14px 22px;font-size:16px;font-weight:700;
+  background:rgba(0,180,148,.07);color:var(--cyan-deep);
+}
+footer{
+  border-top:1px solid var(--line);
+  padding:30px clamp(20px,6vw,72px);
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
+  color:var(--muted);font-size:13px;
+}
+
+/* ============ 滚动入场 ============ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}
+.reveal.d2{transition-delay:.16s}
+.reveal.d3{transition-delay:.24s}
+.reveal.d4{transition-delay:.32s}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+
+<canvas id="particles" aria-hidden="true"></canvas>
+<div class="veil" aria-hidden="true"></div>
+
+<nav id="nav">
+  <div class="brand">虾小片<span class="dot">AI</span></div>
+  <div class="links">
+    <a href="#goal">我们的目标</a>
+    <a href="#biz">能做什么</a>
+    <a href="#citymesh">CityMesh</a>
+    <a href="#find">聊一聊</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- 首屏 -->
+  <header class="hero" style="position:relative">
+    <span class="eyebrow">虾小片AI · 团队主页</span>
+    <h1>电脑上的任何工作<br>都能<span class="grad">自动化</span></h1>
+    <div class="typer-line"><span id="typer"></span><span class="cursor"></span></div>
+    <div class="hero-cta">
+      <a class="btn btn-main" href="#biz">看我们能做什么</a>
+      <a class="btn btn-ghost" href="#goal">我们为什么做这件事</a>
+    </div>
+    <div class="scroll-hint">往下看<span class="arrow"></span></div>
+  </header>
+
+  <!-- 目标 -->
+  <section id="goal">
+    <div class="sec-head reveal">
+      <span class="sec-tag">WHY WE DO THIS</span>
+      <h2>我们的目标</h2>
+    </div>
+    <div class="mission reveal d1">
+      <div class="big">让工作<span class="hl">自动化</span>，<br>不再加班。</div>
+      <p class="sub">AI 时代，重复的工作不该再压在人身上。我们做的事只有一件：把电脑上那些重复、繁琐、磨人的活，交给 AI 和程序去干。</p>
+    </div>
+    <div class="goal-grid">
+      <div class="goal reveal d1">
+        <span class="g-num">01 · 重复交给机器</span>
+        <div class="g-title">重复的事，不该人来干</div>
+        <p>每天重复的点击、填表、搬数据、对信息，AI 和脚本能替你完成，速度更快，还不犯错。</p>
+      </div>
+      <div class="goal reveal d2">
+        <span class="g-num">02 · 时间还给创造</span>
+        <div class="g-title">人的时间，花在值钱的地方</div>
+        <p>判断、创意、谈事情、带团队——这些只有人能做。别把一天耗在「人肉机器」的活上。</p>
+      </div>
+      <div class="goal reveal d3">
+        <span class="g-num">03 · 下班就下班</span>
+        <div class="g-title">工作做完了，就该回家</div>
+        <p>客户、家人、爱好、睡眠，不该被加班挤掉。自动化的意义，是把你的晚上还给你。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 业务 -->
+  <section id="biz">
+    <div class="sec-head reveal">
+      <span class="sec-tag">WHAT WE DO</span>
+      <h2>我们能做什么</h2>
+    </div>
+    <div class="biz-list">
+      <div class="biz reveal d1">
+        <div class="num">01</div>
+        <div class="name">办公自动化<small>WORKFLOW AUTOMATION</small></div>
+        <div class="desc">把电脑上重复、繁琐的工作做成自动化流程。省人，省时间。</div>
+      </div>
+      <div class="biz reveal d2">
+        <div class="num">02</div>
+        <div class="name">GEO 城市分站<small>CITYMESH</small></div>
+        <div class="desc">帮本地商家做 AI 搜索排名。客户用 AI 搜的时候，先找到的是你。</div>
+      </div>
+      <div class="biz reveal d3">
+        <div class="num">03</div>
+        <div class="name">定制开发<small>CUSTOM DEV</small></div>
+        <div class="desc">写代码、做工具、搭网站、做后台。按你的需求来，不是套模板。</div>
+      </div>
+      <div class="biz reveal d4">
+        <div class="num">04</div>
+        <div class="name">AI 内容<small>AI CONTENT</small></div>
+        <div class="desc">AI 视频、漫剧、图文内容生产。一个人也能起号。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CityMesh -->
+  <section id="citymesh">
+    <div class="citymesh reveal">
+      <div>
+        <span class="cm-tag">旗舰产品</span>
+        <h3>CityMesh · AI 搜索城市分站</h3>
+        <p>AI 搜索时代，用户不点百度前三名了，他们直接问 AI。谁把答案喂进 AI，谁就能被找到。CityMesh 就是帮你占住这个位置的系统。</p>
+        <div class="cm-points">
+          <span>本地商家：一条街同行都在，为什么先搜到你</span>
+          <span>有门店、有服务、想被 AI 推荐的生意都适用</span>
+          <span>产品详情、案例演示，来聊</span>
+        </div>
+      </div>
+      <div class="cm-side">
+        <div><div class="q">一句话理解</div><div class="a">搜索引擎优化，<br>换成 AI 版。</div></div>
+        <div><div class="q">谁需要</div><div class="a">想被 AI 推荐的<br>本地生意。</div></div>
+        <div><div class="q">怎么开始</div><div class="a">联系我们，<br>先看演示再谈。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 结尾 -->
+  <section id="find">
+    <div class="cta reveal">
+      <div class="cta-box">
+        <div>
+          <h2>把你的重复工作，<span>交给我们</span></h2>
+          <p class="sub">说说你每天在电脑上重复做的事，剩下的交给我们。自动化的第一步，是聊一句。</p>
+        </div>
+        <div class="cta-pill">让工作自动化 · 不再加班</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>虾小片AI © 2026</span>
+  <span>电脑上的工作，都能自动化</span>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- 粒子背景 ---------- */
+  var cv = document.getElementById("particles");
+  var ctx = cv.getContext("2d");
+  var W, H, pts = [], mouse = {x:-9999, y:-9999};
+  function resize(){
+    W = cv.width = window.innerWidth;
+    H = cv.height = window.innerHeight;
+    var n = Math.min(110, Math.floor(W * H / 16000));
+    pts = [];
+    for (var i = 0; i < n; i++) {
+      pts.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - .5) * .35,
+        vy: (Math.random() - .5) * .35,
+        r: Math.random() * 1.6 + .5
+      });
+    }
+  }
+  resize();
+  window.addEventListener("resize", resize);
+  window.addEventListener("mousemove", function(e){
+    mouse.x = e.clientX; mouse.y = e.clientY;
+  });
+  function frame(){
+    if (reduced) return;
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10;
+      if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(0,145,116,.35)";
+      ctx.fill();
+      for (var j = i + 1; j < pts.length; j++) {
+        var q = pts[j], dx = p.x - q.x, dy = p.y - q.y;
+        var d2 = dx * dx + dy * dy;
+        if (d2 < 130 * 130) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = "rgba(0,145,116," + (0.12 * (1 - d2 / (130 * 130))) + ")";
+          ctx.lineWidth = .6;
+          ctx.stroke();
+        }
+      }
+      var mx = p.x - mouse.x, my = p.y - mouse.y;
+      var md2 = mx * mx + my * my;
+      if (md2 < 180 * 180) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = "rgba(0,145,116," + (0.25 * (1 - md2 / (180 * 180))) + ")";
+        ctx.lineWidth = .8;
+        ctx.stroke();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+
+  /* ---------- 打字机 ---------- */
+  var lines = [
+    "重复的工作，交给 AI。",
+    "你的时间，应该花在更重要的事上。",
+    "让工作自动化，不再加班。"
+  ];
+  var typer = document.getElementById("typer");
+  var li = 0, ci = 0, deleting = false;
+  function type(){
+    if (reduced) { typer.textContent = lines[0]; return; }
+    var cur = lines[li];
+    typer.textContent = cur.slice(0, ci);
+    if (!deleting) {
+      ci++;
+      if (ci > cur.length) { deleting = true; setTimeout(type, 1700); return; }
+      setTimeout(type, 85);
+    } else {
+      ci--;
+      if (ci < 0) { deleting = false; li = (li + 1) % lines.length; ci = 0; setTimeout(type, 350); return; }
+      setTimeout(type, 38);
+    }
+  }
+  type();
+
+  /* ---------- 滚动入场 ---------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+    });
+  }, {threshold: .12});
+  document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
+
+  /* ---------- 导航滚动态 ---------- */
+  var nav = document.getElementById("nav");
+  function onScroll(){ nav.classList.toggle("scrolled", window.scrollY > 40); }
+  window.addEventListener("scroll", onScroll, {passive: true});
+  onScroll();
+})();
+</script>
+</body>
+</html>
